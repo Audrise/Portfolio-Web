@@ -699,10 +699,12 @@ a {
   background: linear-gradient(
     120deg,
     var(--surface),
-    color-mix(in srgb, var(--accent) 7%, var(--surface)),
+    color-mix(in srgb, var(--accent) 10%, var(--surface)),
+    color-mix(in srgb, var(--accent) 3%, var(--surface)),
+    color-mix(in srgb, var(--accent) 10%, var(--surface)),
     var(--surface)
   );
-  background-size: 200% 200%;
+  background-size: 300% 300%;
   animation: contactGradient 8s ease infinite;
 }
 
