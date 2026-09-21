@@ -21,14 +21,6 @@ This is my personal portfolio website, created to showcase my background, educat
 
 The website is designed with a responsive layout and includes both light and dark themes for a comfortable browsing experience across different devices.
 
-## 📑 Table of Contents
-
-* **[📖 Description](#description)**
-* **[📌 Features](#features)**
-* **[🛠️ Technologies](#technologies)**
-* **[📦 Getting Started](#getting-started)**
-* **[🗂️ Structure](#structure)**
-
 ## 📌 Features
 
 * Responsive design for desktop, tablet, and mobile devices.
@@ -63,17 +55,5 @@ The website is designed with a responsive layout and includes both light and dar
 * Bootstrap 5
 * Bootstrap Icons
 
-## 📦 Getting Started
-
-### 🌐 Using the Website
-
-The portfolio is available online at:
-
-**[https://faudrislabs.vercel.app](https://faudrislabs.vercel.app)**
-
-### 💻 Running Locally
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Audrise/Audrise-Portfolio.git
+## 🌐 Website
+### <a href="https://audrislabs.vercel.app">View my portfolio</a>
