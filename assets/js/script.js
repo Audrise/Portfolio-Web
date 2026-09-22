@@ -1,5 +1,4 @@
 const root = document.documentElement;
-
 const navbar = document.querySelector(".glass-nav");
 const navLinks = document.querySelectorAll(".nav-link");
 const navSections = document.querySelectorAll("section[id]");
@@ -8,13 +7,15 @@ const sections = document.querySelectorAll(".section, .section-muted");
 const skillsSection = document.getElementById("skills");
 const skillBars = document.querySelectorAll(".progress-bar");
 const themeToggle = document.getElementById("themeToggle");
+const languageToggle = document.getElementById("languageToggle");
 const topBtn = document.getElementById("topBtn");
 const errorContent = document.querySelector(".error-content");
-
 const savedTheme = localStorage.getItem("theme");
 
 let scrollingToTop = false;
+let currentLanguage = localStorage.getItem("language") || "en";
 
+// Theme
 if (savedTheme) {
   root.setAttribute("data-bs-theme", savedTheme);
 }
@@ -30,7 +31,6 @@ function updateThemeIcon() {
 
 updateThemeIcon();
 
-// Theme
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
     const current = root.getAttribute("data-bs-theme");
@@ -38,22 +38,75 @@ if (themeToggle) {
 
     root.setAttribute("data-bs-theme", next);
     localStorage.setItem("theme", next);
-
     updateThemeIcon();
+    closeNavbar();
   });
 }
 
-// Navigation
-document.querySelectorAll(".nav-link").forEach(link => {
-  link.addEventListener("click", () => {
-    const nav = document.getElementById("nav");
+// Language
+function updateLanguageButton() {
+  if (!languageToggle) return;
 
-    if (nav && nav.classList.contains("show")) {
-      bootstrap.Collapse.getOrCreateInstance(nav).hide();
+  languageToggle.textContent = currentLanguage === "en" ? "ID" : "EN";
+}
+
+async function loadTranslations(language) {
+  try {
+    const response = await fetch(`/assets/translations/${language}.json`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load ${language}.json`);
     }
+
+    const translations = await response.json();
+
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+      const key = element.dataset.i18n;
+
+      if (translations[key]) {
+        element.textContent = translations[key];
+      }
+    });
+
+    document.documentElement.lang = language;
+
+    localStorage.setItem("language", language);
+    currentLanguage = language;
+
+    updateLanguageButton();
+  } catch (error) {
+    console.error("Translation error:", error);
+  }
+}
+
+if (languageToggle) {
+  languageToggle.addEventListener("click", () => {
+    const nextLanguage = currentLanguage === "en" ? "id" : "en";
+
+    loadTranslations(nextLanguage);
+    closeNavbar();
+  });
+}
+
+updateLanguageButton();
+loadTranslations(currentLanguage);
+
+// Navigation
+function closeNavbar() {
+  const nav = document.getElementById("nav");
+
+  if (nav && nav.classList.contains("show")) {
+    bootstrap.Collapse.getOrCreateInstance(nav).hide();
+  }
+}
+
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    closeNavbar();
   });
 });
 
+// Active Navigation
 function updateActiveNav() {
   const scrollPosition = window.scrollY + 150;
   const pageBottom = window.innerHeight + window.scrollY;
@@ -84,10 +137,11 @@ function updateActiveNav() {
     );
   });
 }
+
 window.addEventListener("scroll", updateActiveNav);
 window.addEventListener("load", updateActiveNav);
 
-// Btn top
+// Back to Top
 if (topBtn && skillsSection) {
   const topBtnObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -109,7 +163,6 @@ if (topBtn && skillsSection) {
 
   topBtn.addEventListener("click", () => {
     scrollingToTop = true;
-
     topBtn.classList.remove("show");
 
     window.scrollTo({
@@ -134,7 +187,7 @@ if (navbar) {
   });
 }
 
-// Hero section
+// Hero Section
 if (heroSection) {
   window.addEventListener("load", () => {
     setTimeout(() => {
@@ -143,7 +196,7 @@ if (heroSection) {
   });
 }
 
-// Fade in
+// Fade In
 if (sections.length) {
   const sectionObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -161,7 +214,7 @@ if (sections.length) {
   });
 }
 
-// Progressbar animation
+// Progress Bar Animation
 if (skillBars.length) {
   const skillObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -170,7 +223,6 @@ if (skillBars.length) {
         const progress = bar.dataset.progress;
 
         bar.style.width = `${progress}%`;
-
         observer.unobserve(bar);
       }
     });

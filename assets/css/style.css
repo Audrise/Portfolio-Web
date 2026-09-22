@@ -111,6 +111,15 @@ a {
   color: var(--text);
 }
 
+.theme-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#themeToggle {
+  margin-left: 5px;
+}
 
 /* =========================================================
    Hero
@@ -845,15 +854,28 @@ footer {
    =========================================================
 */
 
-@media (max-width: 991px) {
+@media (max-width: 1199.98px) {
   .navbar-collapse {
-    padding: 1rem 0;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+  }
+
+  .theme-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: flex-end;
   }
 
   .theme-btn {
     position: static;
     transform: none;
-    margin-left: auto;
+    margin-left: 0;
+  }
+
+  #themeToggle {
+    margin-left: 5px;
   }
 
   .hero-section {
@@ -863,9 +885,37 @@ footer {
   .hero-card {
     height: 380px;
   }
+}
 
+@media (max-width: 991px) {
   .navbar-collapse {
     padding: 1rem 0;
+  }
+
+  .theme-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .theme-btn {
+    position: static;
+    transform: none;
+    margin-left: 0;
+  }
+
+  #themeToggle {
+    margin-left: 5px;
+  }
+
+  .hero-section {
+    padding-top: 7rem;
+  }
+
+  .hero-card {
+    height: 380px;
   }
 }
 
