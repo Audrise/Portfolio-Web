@@ -25,8 +25,8 @@ function updateThemeIcon() {
 
   themeToggle.innerHTML =
     root.getAttribute("data-bs-theme") === "dark"
-      ? '<i class="bi bi-moon-stars-fill"></i>'
-      : '<i class="bi bi-sun-fill"></i>';
+    ? '<i class="bi bi-sun-fill"></i>'
+    : '<i class="bi bi-moon-stars-fill"></i>';
 }
 
 updateThemeIcon();
