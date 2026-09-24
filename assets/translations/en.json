@@ -7,11 +7,10 @@
   "nav.education": "Education",
   "nav.experience": "Experience",
   "nav.contact": "Contact",
-  "nav.switch_theme": "Switch theme",
 
   "hero.eyebrow": "Hello, I'm",
   "hero.role": "Software Developer",
-  "hero.description": "I build modern, responsive, and user-friendly applications with a focus on clean code, flexibility, and thoughtful design.",
+  "hero.description": "I build modern, responsive, and user-friendly applications with a focus on clean code and flexibility.",
   "hero.view_work": "View My Work",
   "hero.download_cv": "Download CV",
 

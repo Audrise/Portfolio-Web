@@ -7,16 +7,15 @@
   "nav.education": "Pendidikan",
   "nav.experience": "Pengalaman",
   "nav.contact": "Kontak",
-  "nav.switch_theme": "Ganti tema",
 
   "hero.eyebrow": "Halo, saya",
   "hero.role": "Software Developer",
-  "hero.description": "Saya membuat aplikasi yang modern, responsif, dan mudah digunakan dengan fokus pada kode yang bersih, fleksibilitas, dan desain yang dipikirkan dengan baik.",
+  "hero.description": "Saya membuat aplikasi yang modern, responsif, dan mudah digunakan dengan fokus pada kode yang bersih dan fleksibel.",
   "hero.view_work": "Lihat Proyek Saya",
   "hero.download_cv": "Unduh CV",
 
   "about.title": "Tentang Saya",
-  "about.description": "Saya adalah Developer Python yang senang membuat berbagai tools yang bermanfaat, mengotomatiskan pekerjaan yang berulang, dan mengubah ide menjadi proyek yang praktis. Sebagian besar pekerjaan saya didorong oleh rasa ingin tahu, pembelajaran berkelanjutan, dan kesenangan dalam menciptakan sesuatu dari awal.",
+  "about.description": "Saya adalah Developer Python yang suka membuat berbagai tools yang bermanfaat, mengotomatiskan pekerjaan yang berulang, dan mengubah ide menjadi proyek yang praktis. Sebagian besar pekerjaan saya didorong oleh rasa ingin tahu, pembelajaran berkelanjutan, dan kesenangan dalam menciptakan sesuatu dari awal.",
   "about.year_experience": "Tahun Pengalaman",
   "about.projects_completed": "Proyek Selesai",
   "about.technologies": "Teknologi",
