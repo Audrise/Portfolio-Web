@@ -3,6 +3,7 @@ const navbar = document.querySelector(".glass-nav");
 const navLinks = document.querySelectorAll(".nav-link");
 const navSections = document.querySelectorAll("section[id]");
 const heroSection = document.querySelector(".hero-section");
+const heroTitle = document.querySelector(".hero-section h1");
 const sections = document.querySelectorAll(".section, .section-muted");
 const skillsSection = document.getElementById("skills");
 const skillBars = document.querySelectorAll(".progress-bar");
@@ -39,7 +40,6 @@ if (themeToggle) {
     root.setAttribute("data-bs-theme", next);
     localStorage.setItem("theme", next);
     updateThemeIcon();
-    closeNavbar();
   });
 }
 
@@ -84,7 +84,6 @@ if (languageToggle) {
     const nextLanguage = currentLanguage === "en" ? "id" : "en";
 
     loadTranslations(nextLanguage);
-    closeNavbar();
   });
 }
 
@@ -99,6 +98,10 @@ function closeNavbar() {
     bootstrap.Collapse.getOrCreateInstance(nav).hide();
   }
 }
+
+window.addEventListener("scroll", () => {
+  closeNavbar();
+});
 
 navLinks.forEach(link => {
   link.addEventListener("click", () => {
@@ -143,23 +146,20 @@ window.addEventListener("load", updateActiveNav);
 
 // Back to Top
 if (topBtn && skillsSection) {
-  const topBtnObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (scrollingToTop) {
-        return;
-      }
+  function updateTopButton() {
+    if (scrollingToTop) {
+      return;
+    }
 
-      if (entry.isIntersecting) {
-        topBtn.classList.add("show");
-      } else if (window.scrollY < skillsSection.offsetTop) {
-        topBtn.classList.remove("show");
-      }
-    });
-  }, {
-    threshold: 0.3
-  });
+    if (window.scrollY >= skillsSection.offsetTop) {
+      topBtn.classList.add("show");
+    } else {
+      topBtn.classList.remove("show");
+    }
+  }
 
-  topBtnObserver.observe(skillsSection);
+  window.addEventListener("scroll", updateTopButton);
+  window.addEventListener("load", updateTopButton);
 
   topBtn.addEventListener("click", () => {
     scrollingToTop = true;
@@ -183,7 +183,7 @@ if (navbar) {
   window.addEventListener("load", () => {
     setTimeout(() => {
       navbar.classList.add("show");
-    }, 100);
+    }, 120);
   });
 }
 
@@ -193,6 +193,20 @@ if (heroSection) {
     setTimeout(() => {
       heroSection.classList.add("show");
     }, 50);
+  });
+}
+
+if (heroTitle) {
+  const text = heroTitle.textContent;
+  heroTitle.textContent = "";
+
+  [...text].forEach((char, index) => {
+    const span = document.createElement("span");
+
+    span.textContent = char === " " ? "\u00A0" : char;
+    span.style.animationDelay = `${index * 0.1}s`;
+
+    heroTitle.appendChild(span);
   });
 }
 

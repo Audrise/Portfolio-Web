@@ -83,8 +83,7 @@ a {
   right: 1rem;
 }
 
-.navbar-brand span,
-.hero-role {
+.navbar-brand span {
   color: var(--accent);
 }
 
@@ -96,20 +95,19 @@ a {
 
 .navbar .nav-link.active {
   color: var(--accent-hover);
-  animation: navlink-gradient 3s ease-in-out infinite;
+  animation: navlink-gradient 2s ease-in-out infinite;
 }
 
 @keyframes navlink-gradient {
   0%,
   100% {
-    color: rgb(0, 106, 255);
+    color: var(--accent-hover);
   }
 
   50% {
-    color: rgb(0, 8, 255);
+    color: rgb(2, 65, 202);
   }
 }
-
 
 .theme-btn {
   display: flex;
@@ -153,6 +151,26 @@ a {
     transform 0.8s ease;
 }
 
+.hero-section h1 {
+  white-space: nowrap;
+}
+
+.hero-section h1 span {
+  display: inline-block;
+  opacity: 0;
+  animation: text-reveal 0.08s ease forwards;
+}
+
+@keyframes text-reveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .hero-section.show {
   opacity: 1;
   transform: translateY(0);
@@ -179,8 +197,36 @@ a {
   border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
   border-radius: 999px;
   color: var(--accent);
+  animation: eyebrow-gradient 3s ease-in-out infinite;
   font-size: 0.8rem;
   font-weight: 700;
+}
+
+@keyframes eyebrow-gradient {
+  0%,
+  100% {
+    color: var(--accent-hover);
+  }
+
+  50% {
+    color: rgb(2, 65, 202);
+  }
+}
+
+.hero-role {
+  color: var(--accent);
+  animation: hero-role-gradient 3s ease-in-out infinite;
+}
+
+@keyframes hero-role-gradient {
+  0%,
+  100% {
+    color: var(--accent-hover);
+  }
+
+  50% {
+    color: rgb(2, 65, 202);
+  }
 }
 
 .hero-copy {
@@ -794,7 +840,7 @@ a {
   border-radius: 12px;
 
   background: rgba(9, 103, 232, 1);
-  animation: top-btn-gradient 8s ease-in-out infinite;
+  animation: top-btn-gradient 2s ease-in-out infinite;
 
   color: #fff;
   opacity: 0;
@@ -810,20 +856,22 @@ a {
   visibility: visible;
 }
 
-.top-btn:hover,
 .top-btn:active {
-  color: var(--muted);
+  animation-play-state: paused;
+}
+
+.top-btn:hover {
   animation-play-state: paused;
 }
 
 @keyframes top-btn-gradient {
   0%,
   100% {
-    background: rgb(0, 90, 216);
+    background-color: var(--accent);
   }
 
   50% {
-    background: rgb(0, 55, 255);
+    background-color: var(--accent-hover);
   }
 }
 
@@ -958,6 +1006,10 @@ footer {
 
   #themeToggle {
     margin-left: 5px;
+  }
+
+  .hero-section h1 {
+    margin-inline: auto;
   }
 
   .hero-section {
