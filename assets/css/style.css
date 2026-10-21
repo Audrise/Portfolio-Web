@@ -582,6 +582,413 @@ a {
 
 
 /* =========================================================
+   Music Player
+   ========================================================= */
+
+.music-trigger {
+  border: 0;
+  cursor: pointer;
+  transition: background-color .25s, color .25s;
+}
+
+.music-trigger:hover {
+  background: color-mix(in srgb, var(--accent) 20%, var(--surface));
+}
+
+.music-trigger:focus-visible,
+.music-controls button:focus-visible,
+.music-close:focus-visible,
+.music-display:focus-visible,
+#musicSeek:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+
+/* =========================================================
+   Music Overlay / Dynamic Background
+   ========================================================= */
+
+.music-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  isolation: isolate;
+  overflow: hidden;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition: opacity .3s ease, visibility .3s ease;
+}
+
+/* Cover Art Background */
+.music-overlay::before {
+  content: "";
+  position: absolute;
+  inset: -30px;
+  z-index: -2;
+
+  background-image: var(--music-bg, none);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  opacity: .4;
+  filter: blur(25px);
+
+  pointer-events: none;
+}
+
+/* Dark Tint */
+.music-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: rgba(0, 0, 0, .35);
+  pointer-events: none;
+}
+
+.music-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+
+/* =========================================================
+   Music Panel
+   ========================================================= */
+
+.music-panel {
+  --surface: #101827;
+  --surface-soft: #172235;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: #263449;
+
+  color-scheme: dark;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  width: min(100%, 460px);
+  max-height: calc(100dvh - 40px);
+
+  padding: 32px;
+
+  border-radius: 24px;
+
+  background: var(--surface);
+  color: var(--text);
+  text-align: center;
+
+  box-shadow: 0 25px 80px #0005;
+
+  transform: translateY(12px);
+  transition: transform .3s ease;
+}
+
+/* Dynamic Cover Art Background */
+.music-panel::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  z-index: -1;
+
+  background-image:
+    linear-gradient(
+      rgba(8, 12, 20, .45),
+      rgba(8, 12, 20, .45)
+    ),
+    var(--music-bg, none);
+
+  background-position: center;
+  background-size: cover, auto 100%;
+  background-repeat: no-repeat;
+
+  opacity: .4;
+  filter: blur(8px);
+}
+
+.music-overlay.open .music-panel {
+  transform: translateY(0);
+}
+
+.music-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.music-eyebrow {
+  display: block;
+  margin-bottom: 18px;
+
+  color: var(--accent);
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+}
+
+
+/* =========================================================
+   Interactive Cover / Lyrics
+   ========================================================= */
+
+.music-display {
+  position: relative;
+
+  width: min(100%, 305px);
+  aspect-ratio: 1;
+  margin: 0 auto 22px;
+
+  overflow: hidden;
+  border-radius: 14px;
+
+  background: transparent;
+  cursor: pointer;
+}
+
+.music-cover,
+.music-display-lyrics {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  transition: opacity .35s ease;
+}
+
+.music-cover {
+  display: block;
+  object-fit: cover;
+
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   Synced Lyrics
+   ========================================================= */
+
+.music-display-lyrics {
+  display: block;
+  overflow-y: auto;
+
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+
+  background: transparent;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity .35s ease;
+}
+
+.music-display-lyrics::-webkit-scrollbar {
+  display: none;
+}
+
+#musicLyricsContent {
+  width: 100%;
+  padding: 35% 8%;
+  text-align: center;
+}
+
+.lyric-line {
+  margin: 0 0 .55rem;
+
+  font-size: 1.2rem;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -.015em;
+
+  color: var(--muted);
+  opacity: .35;
+
+  transition: color .3s ease, opacity .3s ease;
+}
+
+.lyric-line.active {
+  color: var(--text);
+  font-weight: 750;
+  opacity: 1;
+}
+
+.music-display.show-lyrics .music-cover {
+  opacity: 0;
+}
+
+.music-display.show-lyrics .music-display-lyrics {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* =========================================================
+   Track Information
+   ========================================================= */
+
+.music-panel h2 {
+  margin: 0 0 6px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.music-artist {
+  margin: 0;
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+
+/* =========================================================
+   Music Progress Bar
+   ========================================================= */
+
+.music-progress {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+#musicSeek {
+  --seek-progress: 0%;
+
+  display: block;
+  width: 100%;
+  height: 5px;
+  margin: 0;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+
+  background: linear-gradient(
+    to right,
+    #ffffff var(--seek-progress),
+    #475569 var(--seek-progress)
+  );
+}
+
+/* Chrome, Edge, Safari */
+#musicSeek::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+
+  background: var(--muted);
+  cursor: pointer;
+}
+
+/* Firefox */
+#musicSeek::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+
+  background: var(--muted);
+  cursor: pointer;
+}
+
+.music-time {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: .6rem;
+
+  color: var(--muted);
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================================
+   Music Controls
+   ========================================================= */
+
+.music-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.music-controls button {
+  display: grid;
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: transparent;
+  color: var(--text);
+
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.music-controls #musicPlay {
+  width: 56px;
+  height: 56px;
+
+  background: transparent;
+  color: var(--text);
+
+  font-size: 1.9rem;
+}
+
+
+/* =========================================================
+   Accessibility
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .music-overlay,
+  .music-panel,
+  .music-cover,
+  .music-display-lyrics {
+    transition: none;
+  }
+}
+
+
+/* =========================================================
    Projects
    =========================================================
 */
